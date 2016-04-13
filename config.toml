@@ -1,0 +1,31 @@
+[cam0]
+index=0
+shutter=10
+gain=60
+trigger_on=false
+
+[cam1]
+index=1
+shutter=10
+gain=60
+trigger_on=false
+
+[cam2]
+index=2
+shutter=10
+gain=60
+trigger_on=false
+
+[mog-config]
+learning_coeff=0.5
+
+[hsv-config]
+tune=true
+erode=1
+dilate=4
+min_area=350
+max_area=926.0
+h_thresholds={min=0, max=103}
+s_thresholds={min=169, max=256}
+v_thresholds={min=98, max=256}
+

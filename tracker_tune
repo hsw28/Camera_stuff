@@ -1,0 +1,17 @@
+#!/bin/bash
+trap 'kill $(jobs -p)' EXIT
+#initialize cameras (0 = above box, 1 = maze, 2 = in box)
+(oat frameserve gige raw1 -c config.toml cam1) &
+
+#prepare frames for object detection
+(oat framefilt mog raw1 filt1) &
+
+#perform object detection
+(oat posidet hsv filt1 pos1 --tune) &
+
+#decorate original frames with position data
+(oat decorate raw1 dec1 -p pos1) &
+
+#view video stream
+(oat view dec1)
+
