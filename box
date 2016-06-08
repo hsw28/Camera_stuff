@@ -1,0 +1,13 @@
+#!/bin/bash
+trap 'kill $(jobs -p)' EXIT
+#initialize cameras (0 = above box, 1 = maze, 2 = in box)
+(oat frameserve gige raw0 -c config.toml cam0) &
+(oat frameserve gige raw2 -c config.toml cam2) &
+
+#view video stream
+(oat view raw0) &
+(oat view raw2) &
+
+#save video stream
+(oat record -d -n abovebox -s raw0) &
+(oat record -d -n inbox -s raw2)

@@ -1,31 +1,42 @@
 [cam0]
 index=0
-shutter=10
-gain=60
 trigger_on=false
 
 [cam1]
 index=1
 shutter=10
-gain=60
+gain=30
 trigger_on=false
+
+[cam11]
+index=1
+fps = 30
+shutter=10
+gain=30
+trigger_on=false
+
+
 
 [cam2]
 index=2
-shutter=10
-gain=60
 trigger_on=false
 
 [mog-config]
 learning_coeff=0.5
 
 [hsv-config]
-tune=true
 erode=1
-dilate=4
-min_area=350
-max_area=926.0
-h_thresholds={min=0, max=103}
-s_thresholds={min=169, max=256}
-v_thresholds={min=98, max=256}
+dilate=11
+min_area=0
+max_area=1137
+h_thresholds={min=17, max=41}
+s_thresholds={min=233, max=256}
+v_thresholds={min=183, max=256}
 
+[maze]
+	distortion-coeffs = [-0.329473, 0.0763885, 0.0116363, 0.00813795, 0.0149266]
+	camera-matrix = [905.424, 0.00000, 645.185, 0.00000, 912.921, 353.664, 0.00000, 0.00000, 1.00000]
+	camera-model = 0
+
+[mask]
+mask = "./mask.png"

@@ -1,22 +1,28 @@
 #!/bin/bash
 trap 'kill $(jobs -p)' EXIT
 #initialize cameras (0 = above box, 1 = maze, 2 = in box)
-(oat frameserve gige raw1 -c config.toml cam1) &
+(oat frameserve gige raw -c config.toml cam1) &
+
+#undistort frames
+(oat framefilt undistort raw und -c config.toml maze) &
+
+#apply mask
+(oat framefilt mask und msk -c config.toml mask) &
 
 #prepare frames for object detection
-(oat framefilt mog raw1 filt1) &
+(oat framefilt mog msk filt) &
 
 #perform object detection
-(oat posidet hsv filt1 pos1 -c config.toml hsv-config) &
+(oat posidet hsv filt pos -c config.toml hsv-config) &
 
-#decorate original frames with position data
-(oat decorate raw1 dec1 -p pos1) &
+#decorate undistorted frames with position data
+(oat decorate und dec -p pos) &
 
 #network position
-(oat posisock rep pos1 -e tcp\:\/\/192.168.2.13\:5555) &
+(oat posisock rep pos -e tcp\:\/\/192.168.2.13\:5555) &
 
 #view video stream
-(oat view dec1) &
+(oat view dec) &
 
 #save video stream
-(oat record -s dec1 -p pos1)
+(oat record -d -n maze -s dec -p pos)
